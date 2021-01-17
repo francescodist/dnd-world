@@ -7,6 +7,9 @@ const io = require("socket.io")(server, { transports: ["websocket"] });
 //Loads the handlebars module
 const handlebars = require("express-handlebars");
 //Sets our app to use the handlebars engine
+
+app.use(express.json());
+
 app.set("view engine", "handlebars");
 //Sets handlebars configurations (we will go through them later on)
 app.engine(
@@ -48,6 +51,11 @@ app.get("/creategame", (req, res) => {
   res.render("creategame", { layout: "index" });
 });
 
+app.post("/creategame", async (req,res) => {
+  const data = await Game.create(req.body);
+  res.json(data);
+});
+
 setInterval(() => {
   io.sockets.emit("hello", "hiiii");
 }, 2000);
@@ -67,11 +75,3 @@ db.once('open', function() {
 
 var Game = mongoose.model('Game', { name: String});
 var game = {};
-
-function createGame(){
-  var game = { name: document.getElementById("name").innerHTML};
-  if(game.name === null || game.name.trim() === "")
-  document.getElementById("name")
-  socket.emit('createPerson', person);
-  location.href = '/list';
-}
