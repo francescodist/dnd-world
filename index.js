@@ -31,14 +31,7 @@ app.get("/join", async (req, res) => {
 });
 
 function getGames() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve([
-        { name: "Game 1", id: 1 },
-        { name: "Game 2", id: 2 },
-      ]);
-    }, 200);
-  });
+  return Game.find().lean();
 }
 
 app.get("/users", (req, res) => {
