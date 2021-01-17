@@ -1,3 +1,29 @@
-.classtest {
-  color: red;
+body {
+  background-color: #01242D; 
+  color: #9E3753;
+  font-family: Marker Felt, fantasy;
+}
+html {
+  text-align: center;
+}
+
+
+.myButton {
+	background-color:#9E3753;
+	border-radius:28px;
+	border:1px solid #71273B;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:16px 31px;
+	text-decoration:none;
+}
+.myButton:hover {
+	background-color:#71273B;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
 }
