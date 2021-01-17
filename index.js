@@ -27,8 +27,35 @@ app.get("/users", (req, res) => {
   res.render("users", { layout: "index" });
 });
 
+app.get("/creategame", (req, res) => {
+  //Serves the body of the page aka "main.handlebars" to the container //aka "index.handlebars"
+  res.render("creategame", { layout: "index" });
+});
+
 setInterval(() => {
   io.sockets.emit("hello", "hiiii");
 }, 2000);
 
 server.listen(port);
+
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/dungeon-world', {useNewUrlParser: true, useUnifiedTopology: true});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  // we're connected!
+});
+
+
+var Game = mongoose.model('Game', { name: String});
+var game = {};
+
+function createGame(){
+  var game = { name: document.getElementById("name").innerHTML};
+  if(game.name === null || game.name.trim() === "")
+  document.getElementById("name")
+  socket.emit('createPerson', person);
+  location.href = '/list';
+}

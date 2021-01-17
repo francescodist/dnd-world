@@ -27,3 +27,7 @@ html {
 	position:relative;
 	top:1px;
 }
+
+input{
+  margin-left: 20px;
+}
