@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/francescodist/dnd-world/issues"
   },
-  "homepage": "https://github.com/francescodist/dnd-world#readme"
+  "homepage": "https://github.com/francescodist/dnd-world#readme",
+  "dependencies": {
+    "mongoose": "^5.11.12"
+  }
 }
