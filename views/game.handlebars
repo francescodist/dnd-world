@@ -1,0 +1,18 @@
+
+<div class="full-container">
+    <h1>{{game.name}}</h1>
+
+    <h2>List of Characters</h2>
+    <div class="list">
+    {{#each characters}}
+        <a href="/character/{{this._id}}" class="item">
+            <div class="inner-item">
+                {{this.name}} - {{this.class}}
+            </div>
+        </a>
+    {{/each}}
+    </div>
+    <div class="action-footer">
+        <a class="myButton" href="/new-character/{{game._id}}">Create New Character</a>
+    </div>
+</div>

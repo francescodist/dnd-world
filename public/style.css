@@ -2,6 +2,8 @@ body {
   background-color: #01242D; 
   color: #9E3753;
   font-family: Marker Felt, fantasy;
+  margin: 0;
+  height: 100vh;
 }
 html {
   text-align: center;
@@ -29,6 +31,7 @@ html {
 }
 
 .list {
+    height: 100%;
     max-height: 100%;
     overflow-y: auto;
 }
@@ -50,8 +53,20 @@ a.item {
 
 .item .inner-item {
     margin: auto;
+    font-size: 20px;
 }
 
 input{
   margin-left: 20px;
+}
+
+.full-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.action-footer {
+    min-height: 100px;
+    width: 100%;
 }

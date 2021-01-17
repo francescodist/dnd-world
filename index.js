@@ -8,21 +8,39 @@ const io = require("socket.io")(server, { transports: ["websocket"] });
 const handlebars = require("express-handlebars");
 //Sets our app to use the handlebars engine
 
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/dungeon-world', {useNewUrlParser: true, useUnifiedTopology: true});
+const mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost:27017/dungeon-world", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function () {
   // we're connected!
 });
 
-
-const Game = mongoose.model('Game', { name: String});
-const Stat = new mongoose.Schema({base: Number, mod: Number});
-const Stats = new mongoose.Schema({str: Stat, des: Stat, cos: Stat, int: Stat, sag: Stat, car: Stat});
-const Character = mongoose.model('Character', 
-{gameId: Schema.ObjectId, name: String, class: String, stats: Stats, dice: Number, armor: Number, pf: Number, pfMax: Number, load: Number});
+const Game = mongoose.model("Game", { name: String });
+const Stat = new mongoose.Schema({ base: Number, mod: Number });
+const Stats = new mongoose.Schema({
+  str: Stat,
+  cos: Stat,
+  des: Stat,
+  int: Stat,
+  sag: Stat,
+  car: Stat,
+});
+const Character = mongoose.model("Character", {
+  gameId: String,
+  name: String,
+  class: String,
+  stats: Stats,
+  dice: Number,
+  armor: Number,
+  pf: Number,
+  pfMax: Number,
+  load: Number,
+});
 
 app.use(express.json());
 
@@ -33,6 +51,7 @@ app.engine(
   handlebars({
     layoutsDir: __dirname + "/views/layouts",
     partialsDir: __dirname + "/views/partials",
+    defaultLayout: "index",
   })
 );
 app.use(express.static("public"));
@@ -60,9 +79,32 @@ app.get("/creategame", (req, res) => {
   res.render("creategame", { layout: "index" });
 });
 
-app.post("/creategame", async (req,res) => {
+app.post("/creategame", async (req, res) => {
   const data = await Game.create(req.body);
   res.json(data);
+});
+
+app.get("/game/:gameId/", async (req, res) => {
+  const { gameId } = req.params;
+  const game = await Game.findById(gameId).lean();
+  const characters = await Character.find({ gameId }).lean();
+  res.render("game", { layout: "index", game, characters });
+});
+
+app.get("/new-character/:gameId", (req, res) => {
+  res.render("new-character");
+});
+
+app.post("/new-character", async (req, res) => {
+  const character = req.body;
+  const data = await Character.create({ ...character, pf: character.pfMax });
+  res.json(data);
+});
+
+app.get("/character/:id", async (req, res) => {
+  const { id } = req.params;
+  const character = Character.findById(id);
+  res.render("character", { character });
 });
 
 setInterval(() => {
@@ -70,5 +112,3 @@ setInterval(() => {
 }, 2000);
 
 server.listen(port);
-
-
