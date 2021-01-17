@@ -51,3 +51,7 @@ a.item {
 .item .inner-item {
     margin: auto;
 }
+
+input{
+  margin-left: 20px;
+}
