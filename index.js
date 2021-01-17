@@ -86,6 +86,29 @@ app.post("/creategame", async (req, res) => {
   res.json(data);
 });
 
+app.post("/healCharacter", async (req, res) => {
+  //const data = await Game.create(req.body);
+  console.log(req.body);
+  var query = { _id:  req.body.characterId};
+  const character =  await Character.findById(req.body.characterId).lean();
+  previousPf = character.pf;
+  const data = await Character.updateOne(query, { pf: previousPf + req.body.pfToAdd });
+  io.sockets.emit("update");
+  res.json(data);
+});
+
+app.post("/damageCharacter", async (req, res) => {
+  //const data = await Game.create(req.body);
+  console.log(req.body);
+  var query = { _id:  req.body.characterId};
+  const character =  await Character.findById(req.body.characterId).lean();
+  previousPf = character.pf;
+  const data = await Character.updateOne(query, { pf: previousPf - req.body.pfToSub });
+  io.sockets.emit("update");
+  res.json(data);
+});
+
+
 app.get("/game/:gameId/", async (req, res) => {
   const { gameId } = req.params;
   const game = await Game.findById(gameId).lean();

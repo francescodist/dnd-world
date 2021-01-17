@@ -2,7 +2,7 @@
     <h1>{{character.name}} - {{character.class}}</h1>
 
 
-    <form class="list" id="characterForm">
+    <form id="characterForm">
         <div>
             <label for="name">Name</label>
             <input type="text" name="name" id="name" value="{{character.name}}">
@@ -71,7 +71,7 @@
         </div>
     </form>
 
-    <div class="action-footer">
+    <div class="mid-footer">
         <div class = "controller">
             <h1>PF: {{character.pf}} / {{character.pfMax}}</h1>
         </div>
@@ -85,7 +85,7 @@
             <button class="myButton" onclick="set()">Set</button>
         </div>
 
-        <div class = "controller">
+        {{!-- <div class = "controller">
             <div style="width: 100%;"><h2>Roll one or more dices:</h2></div>
             <div>
                 <label for="quantity">Quantity</label>
@@ -108,7 +108,7 @@
                 </select>           
             </div>
             <button class="myButton" onclick="roll()">Roll!</button>
-        </div>
+        </div> --}}
 
 
 

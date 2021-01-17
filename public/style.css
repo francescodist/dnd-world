@@ -41,6 +41,7 @@ p {
     overflow-y: auto;
 }
 
+
 .list-row {
   display: flex;
   padding: 10px;
@@ -87,6 +88,12 @@ input{
 .action-footer {
     min-height: 100px;
     width: 100%;
+}
+
+.mid-footer {
+  margin: auto;
+  min-height: 100px;
+  width: 100%;
 }
 
 .controller {
