@@ -22,6 +22,22 @@ app.get("/", (req, res) => {
   res.render("main", { layout: "index" });
 });
 
+app.get("/join", async (req, res) => {
+  const data = await getGames();
+  res.render("join", { layout: "index", data });
+});
+
+function getGames() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve([
+        { name: "Game 1", id: 1 },
+        { name: "Game 2", id: 2 },
+      ]);
+    }, 200);
+  });
+}
+
 app.get("/users", (req, res) => {
   //Serves the body of the page aka "main.handlebars" to the container //aka "index.handlebars"
   res.render("users", { layout: "index" });
