@@ -8,6 +8,22 @@ const io = require("socket.io")(server, { transports: ["websocket"] });
 const handlebars = require("express-handlebars");
 //Sets our app to use the handlebars engine
 
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/dungeon-world', {useNewUrlParser: true, useUnifiedTopology: true});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  // we're connected!
+});
+
+
+const Game = mongoose.model('Game', { name: String});
+const Stat = new mongoose.Schema({base: Number, mod: Number});
+const Stats = new mongoose.Schema({str: Stat, des: Stat, cos: Stat, int: Stat, sag: Stat, car: Stat});
+const Character = mongoose.model('Character', 
+{gameId: Schema.ObjectId, name: String, class: String, stats: Stats, dice: Number, armor: Number, pf: Number, pfMax: Number, load: Number});
+
 app.use(express.json());
 
 app.set("view engine", "handlebars");
@@ -63,15 +79,3 @@ setInterval(() => {
 server.listen(port);
 
 
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/dungeon-world', {useNewUrlParser: true, useUnifiedTopology: true});
-
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  // we're connected!
-});
-
-
-var Game = mongoose.model('Game', { name: String});
-var game = {};
