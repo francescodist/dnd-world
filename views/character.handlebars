@@ -1,0 +1,138 @@
+<div class="full-container">
+    <h1>{{character.name}} - {{character.class}}</h1>
+
+
+    <form class="list" id="characterForm">
+        <div>
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" value="{{character.name}}">
+        </div>
+        <div>
+            <label for="class">Class</label>
+            <input type="text" name="class" id="class" value="{{character.class}}">
+        </div>
+        <div>
+            FOR
+            <label for="str-base">Base</label>
+            <input type="number" name="str-base" id="str-base" value="{{character.stats.str.base}}">
+            <label for="str-mod">Mod</label>
+            <input type="number" name="str-mod" id="str-mod" value="{{character.stats.str.mod}}">
+        </div>
+        <div>
+            DES
+            <label for="des-base">Base</label>
+            <input type="number" name="des-base" id="des-base" value="{{character.stats.des.base}}">
+            <label for="des-mod">Mod</label>
+            <input type="number" name="des-mod" id="des-mod" value="{{character.stats.des.mod}}">
+        </div>
+        <div>
+            COS
+            <label for="cos-base">Base</label>
+            <input type="number" name="cos-base" id="cos-base" value="{{character.stats.cos.base}}">
+            <label for="cos-mod">Mod</label>
+            <input type="number" name="cos-mod" id="cos-mod" value="{{character.stats.cos.mod}}">
+        </div>
+        <div>
+            INT
+            <label for="int-base">Base</label>
+            <input type="number" name="int-base" id="int-base" value="{{character.stats.int.base}}">
+            <label for="int-mod">Mod</label>
+            <input type="number" name="int-mod" id="int-mod" value="{{character.stats.int.mod}}">
+        </div>
+        <div>
+            SAG
+            <label for="sag-base">Base</label>
+            <input type="number" name="sag-base" id="sag-base" value="{{character.stats.sag.base}}">
+            <label for="sag-mod">Mod</label>
+            <input type="number" name="sag-mod" id="sag-mod" value="{{character.stats.sag.mod}}">
+        </div>
+        <div>
+            CAR
+            <label for="car-base">Base</label>
+            <input type="number" name="car-base" id="car-base" value="{{character.stats.car.base}}">
+            <label for="car-mod">Mod</label>
+            <input type="number" name="car-mod" id="car-mod" value="{{character.stats.car.mod}}">
+        </div>
+        <div>
+            <label for="dice">Danno</label>
+            <input type="number" name="dice" id="dice" value="{{character.dice}}">
+        </div>
+        <div>
+            <label for="armor">Armatura</label>
+            <input type="number" name="armor" id="armor" value="{{character.armor}}">
+        </div>
+        <div>
+            <label for="pfMax">PF MAX</label>
+            <input type="number" name="pfMax" id="pfMax" value="{{character.pfMax}}">
+        </div>
+        <div>
+            <label for="load">Carico</label>
+            <input type="number" name="load" id="load" value="{{character.load}}">
+        </div>
+    </form>
+
+    <div class="action-footer">
+        <div class = "controller">
+            <h1>PF: {{character.pf}} / {{character.pfMax}}</h1>
+        </div>
+        <div class = "controller">
+            <div>
+                <label for="quantity">Quantity</label>
+                <input type="number" name="quantity-health" id="quantity-health">    
+            </div>
+            <button class="myButton" onclick="heal()">Heal</button>
+            <button class="myButton" onclick="damage()">Damage</button>
+            <button class="myButton" onclick="set()">Set</button>
+        </div>
+
+        <div class = "controller">
+            <div style="width: 100%;"><h2>Roll one or more dices:</h2></div>
+            <div>
+                <label for="quantity">Quantity</label>
+                <input type="number" name="quantity-dice" id="quantity-dice">    
+            </div>
+            <div>
+                <label for="type">Type</label>
+                <input type="number" name="type-dice" id="type-dice">            
+            </div>
+            <div>
+                <label for="type">Mod</label>
+                <select name="Mod" id="mod-dice">
+                    <option value="str">FOR</option>
+                    <option value="des">DES</option>
+                    <option value="cos">COS</option>
+                    <option value="int">INT</option>
+                    <option value="sag">SAG</option>
+                    <option value="car">CAR</option>
+                    <option value="none">None</option>
+                </select>           
+            </div>
+            <button class="myButton" onclick="roll()">Roll!</button>
+        </div>
+
+
+
+        
+    </div>
+
+
+    <div class="action-footer">
+        <div class="list-row">
+    {{#each characters}}
+        {{!-- <a href="/character/{{this._id}}" class="item"> --}}
+        <div class = "item">
+            <div class="inner-item">
+                {{this.name}} - {{this.class}}
+            </div>
+            <div class="inner-item">
+                <p>PF: {{this.pf}} / {{this.pfMax}}</p>
+            </div>
+
+        {{!-- </a> --}}
+        </div>
+    {{/each}}
+    </div>
+    </div>
+
+</div>
+

@@ -1,7 +1,7 @@
 const http = require("http");
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const server = http.createServer(app);
 const io = require("socket.io")(server, { transports: ["websocket"] });
 //Loads the handlebars module
@@ -9,9 +9,11 @@ const handlebars = require("express-handlebars");
 //Sets our app to use the handlebars engine
 
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/dungeon-world", {
+mongoose.connect("mongodb+srv://dnd-world.ugyx6.mongodb.net/dungeon-world", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  user: process.env.DB_USER,
+  pass: process.env.DB_PASSWORD
 });
 
 const db = mongoose.connection;
@@ -103,8 +105,9 @@ app.post("/new-character", async (req, res) => {
 
 app.get("/character/:id", async (req, res) => {
   const { id } = req.params;
-  const character = Character.findById(id);
-  res.render("character", { character });
+  const character = await Character.findById(id).lean();
+  const characters = await Character.find({ _id: { $ne: id } }).lean();
+  res.render("character", { character, characters });
 });
 
 setInterval(() => {
