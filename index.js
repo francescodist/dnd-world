@@ -1,6 +1,9 @@
+const http = require("http");
 const express = require("express");
 const app = express();
 const port = 3000;
+const server = http.createServer(app);
+const io = require("socket.io")(server, { transports: ["websocket"] });
 //Loads the handlebars module
 const handlebars = require("express-handlebars");
 //Sets our app to use the handlebars engine
@@ -24,4 +27,8 @@ app.get("/users", (req, res) => {
   res.render("users", { layout: "index" });
 });
 
-app.listen(port, () => console.log(`App listening to port ${port}`));
+setInterval(() => {
+  io.sockets.emit("hello", "hiiii");
+}, 2000);
+
+server.listen(port);
