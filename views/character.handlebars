@@ -91,7 +91,7 @@
 
     <div class="mid-footer">
         <div class="controller">
-            <h1>PF: {{character.pf}} / <span id="pfMaxValue">{{character.pfMax}}</span></h1>
+            <h1>PF: <span id="pfValue">{{character.pf}}</span> / <span id="pfMaxValue">{{character.pfMax}}</span></h1>
         </div>
         <div class="controller">
             <div>
@@ -100,7 +100,7 @@
             </div>
             <button class="myButton" onclick="heal()">Heal</button>
             <button class="myButton" onclick="damage()">Damage</button>
-            <button class="myButton" onclick="set()">Set</button>
+            <button class="myButton" onclick="setPF()">Set</button>
         </div>
 
         {{!-- <div class = "controller">
@@ -143,7 +143,8 @@
                     {{this.name}} - {{this.class}}
                 </div>
                 <div class="inner-item">
-                    <p>PF: {{this.pf}} / {{this.pfMax}}</p>
+                    <p>PF: <span id="pfC{{this._id}}">{{this.pf}}</span> / <span
+                            id="pfMaxC{{this._id}}">{{this.pfMax}}</span></p>
                 </div>
 
                 {{!-- </a> --}}

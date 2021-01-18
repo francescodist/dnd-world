@@ -137,7 +137,7 @@ app.put("/character/:id", async (req, res) => {
   const { id } = req.params;
   const result = await Character.updateOne({ _id: id }, { ...req.body }).lean();
   if (req.body.hasOwnProperty("pf") || req.body.hasOwnProperty("pfMax")) {
-    io.sockets.emit("updateHealth", req.body)
+    io.sockets.emit("updateHealth", { ...req.body, id })
   }
   res.json(result)
 })

@@ -1,23 +1,29 @@
-async function heal() {
+async function updatePF(pf) {
+  await updateStat("pf", `${pf}`);
+  const pfValue = document.querySelector("#pfValue");
+  pfValue.innerHTML = `${pf}`;
+}
+
+function heal() {
   const pfToAdd = Number(document.getElementById("quantity-health").value);
-  const characterId = window.location.pathname.split("/").pop();
-  if (pfToAdd === null) {
-    return;
-  }
-  const params = { pfToAdd, characterId }
-  const { _id } = await postData("/healCharacter", params);
-  window.location = '/character/' + characterId;
+  if (!pfToAdd) return;
+  const pfMax = Number(document.querySelector('#pfMax').value);
+  const currentPF = Number(document.querySelector("#pfValue").innerHTML.trim())
+  const newPF = Math.min(pfToAdd + currentPF, pfMax);
+  updatePF(newPF)
 }
 
 async function damage() {
   const pfToSub = Number(document.getElementById("quantity-health").value);
-  const characterId = window.location.pathname.split("/").pop();
-  if (pfToSub === null) {
-    return;
-  }
-  const params = { pfToSub, characterId }
-  const { _id } = await postData("/damageCharacter", params);
-  window.location = '/character/' + characterId;
+  if (!pfToSub) return;
+  const currentPF = Number(document.querySelector("#pfValue").innerHTML.trim())
+  updatePF(currentPF - pfToSub)
+}
+
+async function setPF() {
+  const pfToSet = Number(document.getElementById("quantity-health").value);
+  if (!(typeof pfToSet === 'number')) return;
+  updatePF(pfToSet)
 }
 
 async function updateStat(stat, value) {
@@ -30,3 +36,16 @@ async function updateStat(stat, value) {
     }
   }
 }
+
+socket.on('updateHealth', data => {
+  let element, value;
+  if (data.hasOwnProperty('pf')) {
+    element = document.querySelector(`#pfC${data.id}`);
+    value = data.pf;
+  } else if (data.hasOwnProperty('pfMax')) {
+    element = document.querySelector(`#pfMaxC${data.id}`);
+    value = data.pfMax
+  }
+  if (!element) return;
+  element.innerHTML = value;
+})
