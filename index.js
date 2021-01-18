@@ -89,8 +89,8 @@ app.post("/creategame", async (req, res) => {
 app.post("/healCharacter", async (req, res) => {
   //const data = await Game.create(req.body);
   console.log(req.body);
-  var query = { _id:  req.body.characterId};
-  const character =  await Character.findById(req.body.characterId).lean();
+  var query = { _id: req.body.characterId };
+  const character = await Character.findById(req.body.characterId).lean();
   previousPf = character.pf;
   const data = await Character.updateOne(query, { pf: previousPf + req.body.pfToAdd });
   io.sockets.emit("update");
@@ -100,8 +100,8 @@ app.post("/healCharacter", async (req, res) => {
 app.post("/damageCharacter", async (req, res) => {
   //const data = await Game.create(req.body);
   console.log(req.body);
-  var query = { _id:  req.body.characterId};
-  const character =  await Character.findById(req.body.characterId).lean();
+  var query = { _id: req.body.characterId };
+  const character = await Character.findById(req.body.characterId).lean();
   previousPf = character.pf;
   const data = await Character.updateOne(query, { pf: previousPf - req.body.pfToSub });
   io.sockets.emit("update");
@@ -133,8 +133,13 @@ app.get("/character/:id", async (req, res) => {
   res.render("character", { character, characters });
 });
 
-setInterval(() => {
-  io.sockets.emit("hello", "hiiii");
-}, 2000);
+app.put("/character/:id", async (req, res) => {
+  const { id } = req.params;
+  const result = await Character.updateOne({ _id: id }, { ...req.body }).lean();
+  if (req.body.hasOwnProperty("pf") || req.body.hasOwnProperty("pfMax")) {
+    io.sockets.emit("updateHealth", req.body)
+  }
+  res.json(result)
+})
 
 server.listen(port);

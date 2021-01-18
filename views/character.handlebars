@@ -5,80 +5,98 @@
     <form id="characterForm">
         <div>
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" value="{{character.name}}">
+            <input type="text" name="name" id="name" value="{{character.name}}"
+                oninput="updateStat('name', this.value)">
         </div>
         <div>
             <label for="class">Class</label>
-            <input type="text" name="class" id="class" value="{{character.class}}">
+            <input type="text" name="class" id="class" value="{{character.class}}"
+                oninput="updateStat('class', this.value)">
         </div>
         <div>
             FOR
             <label for="str-base">Base</label>
-            <input type="number" name="str-base" id="str-base" value="{{character.stats.str.base}}">
+            <input type="number" name="str-base" id="str-base" value="{{character.stats.str.base}}"
+                oninput="updateStat('stats.str.base', this.value)">
             <label for="str-mod">Mod</label>
-            <input type="number" name="str-mod" id="str-mod" value="{{character.stats.str.mod}}">
+            <input type="number" name="str-mod" id="str-mod" value="{{character.stats.str.mod}}"
+                oninput="updateStat('stats.str.mod', this.value)">
         </div>
         <div>
             DES
             <label for="des-base">Base</label>
-            <input type="number" name="des-base" id="des-base" value="{{character.stats.des.base}}">
+            <input type="number" name="des-base" id="des-base" value="{{character.stats.des.base}}"
+                oninput="updateStat('stats.des.base', this.value)">
             <label for="des-mod">Mod</label>
-            <input type="number" name="des-mod" id="des-mod" value="{{character.stats.des.mod}}">
+            <input type="number" name="des-mod" id="des-mod" value="{{character.stats.des.mod}}"
+                oninput="updateStat('stats.des.mod', this.value)">
         </div>
         <div>
             COS
             <label for="cos-base">Base</label>
-            <input type="number" name="cos-base" id="cos-base" value="{{character.stats.cos.base}}">
+            <input type="number" name="cos-base" id="cos-base" value="{{character.stats.cos.base}}"
+                oninput="updateStat('stats.cos.base', this.value)">
             <label for="cos-mod">Mod</label>
-            <input type="number" name="cos-mod" id="cos-mod" value="{{character.stats.cos.mod}}">
+            <input type="number" name="cos-mod" id="cos-mod" value="{{character.stats.cos.mod}}"
+                oninput="updateStat('stats.cos.mod', this.value)">
         </div>
         <div>
             INT
             <label for="int-base">Base</label>
-            <input type="number" name="int-base" id="int-base" value="{{character.stats.int.base}}">
+            <input type="number" name="int-base" id="int-base" value="{{character.stats.int.base}}"
+                oninput="updateStat('stats.int.base', this.value)">
             <label for="int-mod">Mod</label>
-            <input type="number" name="int-mod" id="int-mod" value="{{character.stats.int.mod}}">
+            <input type="number" name="int-mod" id="int-mod" value="{{character.stats.int.mod}}"
+                oninput="updateStat('stats.int.mod', this.value)">
         </div>
         <div>
             SAG
             <label for="sag-base">Base</label>
-            <input type="number" name="sag-base" id="sag-base" value="{{character.stats.sag.base}}">
+            <input type="number" name="sag-base" id="sag-base" value="{{character.stats.sag.base}}"
+                oninput="updateStat('stats.sag.base', this.value)">
             <label for="sag-mod">Mod</label>
-            <input type="number" name="sag-mod" id="sag-mod" value="{{character.stats.sag.mod}}">
+            <input type="number" name="sag-mod" id="sag-mod" value="{{character.stats.sag.mod}}"
+                oninput="updateStat('stats.sag.mod', this.value)">
         </div>
         <div>
             CAR
             <label for="car-base">Base</label>
-            <input type="number" name="car-base" id="car-base" value="{{character.stats.car.base}}">
+            <input type="number" name="car-base" id="car-base" value="{{character.stats.car.base}}"
+                oninput="updateStat('stats.car.base', this.value)">
             <label for="car-mod">Mod</label>
-            <input type="number" name="car-mod" id="car-mod" value="{{character.stats.car.mod}}">
+            <input type="number" name="car-mod" id="car-mod" value="{{character.stats.car.mod}}"
+                oninput="updateStat('stats.car.mod', this.value)">
         </div>
         <div>
             <label for="dice">Danno</label>
-            <input type="number" name="dice" id="dice" value="{{character.dice}}">
+            <input type="number" name="dice" id="dice" value="{{character.dice}}"
+                oninput="updateStat('dice',this.value)">
         </div>
         <div>
             <label for="armor">Armatura</label>
-            <input type="number" name="armor" id="armor" value="{{character.armor}}">
+            <input type="number" name="armor" id="armor" value="{{character.armor}}"
+                oninput="updateStat('armor',this.value)">
         </div>
         <div>
             <label for="pfMax">PF MAX</label>
-            <input type="number" name="pfMax" id="pfMax" value="{{character.pfMax}}">
+            <input type="number" name="pfMax" id="pfMax" value="{{character.pfMax}}"
+                oninput="updateStat('pfMax',this.value)">
         </div>
         <div>
             <label for="load">Carico</label>
-            <input type="number" name="load" id="load" value="{{character.load}}">
+            <input type="number" name="load" id="load" value="{{character.load}}"
+                oninput="updateStat('load',this.value)">
         </div>
     </form>
 
     <div class="mid-footer">
-        <div class = "controller">
-            <h1>PF: {{character.pf}} / {{character.pfMax}}</h1>
+        <div class="controller">
+            <h1>PF: {{character.pf}} / <span id="pfMaxValue">{{character.pfMax}}</span></h1>
         </div>
-        <div class = "controller">
+        <div class="controller">
             <div>
                 <label for="quantity">Quantity</label>
-                <input type="number" name="quantity-health" id="quantity-health">    
+                <input type="number" name="quantity-health" id="quantity-health">
             </div>
             <button class="myButton" onclick="heal()">Heal</button>
             <button class="myButton" onclick="damage()">Damage</button>
@@ -112,27 +130,26 @@
 
 
 
-        
+
     </div>
 
 
     <div class="action-footer">
         <div class="list-row">
-    {{#each characters}}
-        {{!-- <a href="/character/{{this._id}}" class="item"> --}}
-        <div class = "item">
-            <div class="inner-item">
-                {{this.name}} - {{this.class}}
-            </div>
-            <div class="inner-item">
-                <p>PF: {{this.pf}} / {{this.pfMax}}</p>
-            </div>
+            {{#each characters}}
+            {{!-- <a href="/character/{{this._id}}" class="item"> --}}
+            <div class="item">
+                <div class="inner-item">
+                    {{this.name}} - {{this.class}}
+                </div>
+                <div class="inner-item">
+                    <p>PF: {{this.pf}} / {{this.pfMax}}</p>
+                </div>
 
-        {{!-- </a> --}}
+                {{!-- </a> --}}
+            </div>
+            {{/each}}
         </div>
-    {{/each}}
-    </div>
     </div>
 
 </div>
-
