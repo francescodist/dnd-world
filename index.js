@@ -142,4 +142,9 @@ app.put("/character/:id", async (req, res) => {
   res.json(result)
 })
 
+app.get("/dungeon-master/:gameId", async (req, res) => {
+  const characters = await Character.find().lean();
+  res.render("dungeon-master", {characters});
+});
+
 server.listen(port);

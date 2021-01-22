@@ -1,0 +1,16 @@
+<h1>DM Dashboard</h1>
+<div class="list-row">
+    {{#each characters}}   
+    <div class="item no-hover">
+        <a href="/character/{{this._id}}" class="item">
+            <div class="inner-item">
+                {{this.name}} - {{this.class}}
+            </div>
+            <div class="inner-item">
+                <p>PF: <span id="pfC{{this._id}}">{{this.pf}}</span> / <span
+                        id="pfMaxC{{this._id}}">{{this.pfMax}}</span></p>
+            </div>
+        </a>
+    </div>  
+    {{/each}}
+</div>
