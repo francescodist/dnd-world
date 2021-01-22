@@ -118,7 +118,7 @@ app.get("/game/:gameId/", async (req, res) => {
   const { gameId } = req.params;
   const game = await Game.findById(gameId).lean();
   const characters = await Character.find({ gameId }).lean();
-  res.render("game", { layout: "index", game, characters });
+  res.render("game", { layout: "index", game, characters: characters.map(getCharacterWithShortname) });
 });
 
 app.get("/new-character/:gameId", (req, res) => {
@@ -135,7 +135,7 @@ app.get("/character/:id", async (req, res) => {
   const { id } = req.params;
   const character = await Character.findById(id).lean();
   const characters = await Character.find({ _id: { $ne: id } }).lean();
-  res.render("character", { character, characters });
+  res.render("character", { character: getCharacterWithShortname(character), characters: characters.map(getCharacterWithShortname) });
 });
 
 app.put("/character/:id", async (req, res) => {
@@ -149,7 +149,7 @@ app.put("/character/:id", async (req, res) => {
 
 app.get("/dungeon-master/:gameId", async (req, res) => {
   const characters = await Character.find().lean();
-  res.render("dungeon-master", {characters});
+  res.render("dungeon-master", {characters: characters.map(getCharacterWithShortname)});
 });
 
 app.post("/load-pdf",upload.single('upload'),async (req,res) => {
@@ -181,7 +181,13 @@ function syncPdfFiles() {
       })
     })
   });
-  
+}
+
+function getCharacterWithShortname(character) {
+  return {
+    ...character,
+    shortName: character.name.split(" ").shift()
+  }
 }
 
 server.listen(port);
