@@ -10,3 +10,8 @@ socket.on('updateHealth', data => {
     if (!element) return;
     element.innerHTML = value;
 })
+
+socket.on('updateLevel', ({ level, id }) => {
+    let levelElement = document.querySelector(`#levelC${id}`);
+    levelElement.innerHTML = `${level}`
+})

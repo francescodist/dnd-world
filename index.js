@@ -154,6 +154,9 @@ app.put("/character/:id", async (req, res) => {
   if (req.body.hasOwnProperty("pf") || req.body.hasOwnProperty("pfMax")) {
     io.sockets.emit("updateHealth", { ...req.body, id })
   }
+  if(req.body.hasOwnProperty("level")) {
+    io.sockets.emit("updateLevel", {...req.body, id})
+  }
   res.json(result)
 })
 

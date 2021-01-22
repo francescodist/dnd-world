@@ -69,6 +69,11 @@ socket.on('updateHealth', data => {
   element.innerHTML = value;
 })
 
+socket.on('updateLevel', ({level, id}) => {
+  let levelElement = document.querySelector(`#levelC${id}`);
+  levelElement.innerHTML = `${level}`
+})
+
 function loadPDF() {
   const input = document.createElement("input");
   input.type = "file";
