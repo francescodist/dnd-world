@@ -34,7 +34,26 @@ async function updateStat(stat, value) {
       const pfMaxValue = document.querySelector("#pfMaxValue");
       pfMaxValue.innerHTML = value;
     }
+    if(stat === "exp") {
+      const levelBtn = document.querySelector("#levelBtn");
+      if(canLevelUp()) {
+        levelBtn.disabled = false;
+      } else {
+        levelBtn.disabled = true
+      }
+    }
   }
+}
+
+async function levelUp() {
+  const levelEl = document.querySelector("#level");
+  const expEl = document.querySelector("#exp")
+  const level = Number(levelEl.innerHTML);
+  const exp = expEl.value;
+  updateStat("level", `${level + 1}`);
+  updateStat("exp", `${exp - (level + 7)}`);
+  levelEl.innerHTML = `${level + 1}`;
+  expEl.value = exp - (level + 7);
 }
 
 socket.on('updateHealth', data => {
@@ -64,4 +83,10 @@ function loadPDF() {
     postFile("/load-pdf",fd)
   }
   return false;
+}
+
+function canLevelUp() {
+  const exp = document.querySelector("#exp").value;
+  const level = Number(document.querySelector("#level").innerHTML)
+  return exp >= level + 7;
 }

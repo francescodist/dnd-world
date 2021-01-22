@@ -97,7 +97,12 @@
                 <button class="myButton" onclick="loadPDF()">Load PDF</button>
                 <a class="myButton" href="/pdf/uploads/{{character.shortName}}_{{character._id}}.pdf" target="_blank">View PDF</a>
             </div>
-            
+            <div>
+                <label for="exp">EXP</label>
+                <input type="number" name="exp" id="exp" value="{{character.exp}}" oninput="updateStat('exp', this.value)" min="0">
+                LIV: <span id="level">{{character.level}}</span>
+                <button class="myButton" id="levelBtn" {{#unless (canLevelUp character)}}disabled{{/unless}} onclick="levelUp()">Level Up</button>
+            </div>
         </div>
         
     </div>

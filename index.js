@@ -9,7 +9,9 @@ const multer = require("multer")
 const upload = multer({ dest: 'uploads/' })
 const fs = require("fs")
 
-syncPdfFiles();
+if(process.env.SHOULD_SYNC) {
+  syncPdfFiles();
+}
 
 const mongoose = require("mongoose");
 mongoose.connect("mongodb+srv://dnd-world.ugyx6.mongodb.net/dungeon-world", {
@@ -45,7 +47,10 @@ const Character = mongoose.model("Character", {
   pf: Number,
   pfMax: Number,
   load: Number,
+  exp: Number,
+  level: Number
 });
+
 const PdfData = mongoose.model("PdfData",{data: Buffer, name: String})
 
 app.use(express.json());
@@ -59,6 +64,11 @@ app.engine(
     layoutsDir: __dirname + "/views/layouts",
     partialsDir: __dirname + "/views/partials",
     defaultLayout: "index",
+    helpers: {
+      canLevelUp(character) {
+        return character.exp >= 7 + character.level;
+      }
+    }
   })
 );
 app.use(express.static("public"));
@@ -127,7 +137,7 @@ app.get("/new-character/:gameId", (req, res) => {
 
 app.post("/new-character", async (req, res) => {
   const character = req.body;
-  const data = await Character.create({ ...character, pf: character.pfMax });
+  const data = await Character.create({ ...character, pf: character.pfMax, exp: 0, level: 1 });
   res.json(data);
 });
 
