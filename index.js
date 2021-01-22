@@ -9,9 +9,7 @@ const multer = require("multer")
 const upload = multer({ dest: 'uploads/' })
 const fs = require("fs")
 
-fs.mkdir("public/pdf", console.error);
-fs.mkdir("public/pdf/uploads", console.error)
-
+syncPdfFiles();
 
 const mongoose = require("mongoose");
 mongoose.connect("mongodb+srv://dnd-world.ugyx6.mongodb.net/dungeon-world", {
@@ -48,6 +46,7 @@ const Character = mongoose.model("Character", {
   pfMax: Number,
   load: Number,
 });
+const PdfData = mongoose.model("PdfData",{data: Buffer, name: String})
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
@@ -157,11 +156,32 @@ app.post("/load-pdf",upload.single('upload'),async (req,res) => {
   console.log(JSON.stringify(req.body))
   const {path} = req.file
   const {name} = req.body;
-  fs.rename(path, `public/pdf/uploads/${name}`, (err) => {
-    if(!err) console.log(`File: ${name} uploaded successfully`)
+  const newPath = `public/pdf/uploads/${name}`
+  fs.rename(path, newPath, (err) => {
+    if(!err) {
+      console.log(`File: ${name} uploaded successfully`)
+      fs.readFile(newPath, {encoding: "binary"}, async (err, data) => {
+        const pdf = { name, data: Buffer.from(data, "binary") }
+        await PdfData.deleteMany({name});
+        PdfData.create(pdf);
+      })
+    }
     else console.error(`Error loading file ${name}`, err)
   })
+  
   res.json({})
 })
+
+function syncPdfFiles() {
+  fs.mkdir("public/pdf", () => {
+    fs.mkdir("public/pdf/uploads", async () => {
+      const pdfs = await PdfData.find();
+      pdfs.forEach(({ name, data }) => {
+        fs.writeFile(`public/pdf/uploads/${name}`, data, 'binary', console.log)
+      })
+    })
+  });
+  
+}
 
 server.listen(port);
