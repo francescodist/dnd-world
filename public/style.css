@@ -70,8 +70,9 @@ a.item {
     background-color: rgba(255,255,255,0.2);
 }
 
-.item.no-hover {
+.item.dm-item {
   background-color: transparent !important;
+  height: fit-content;
 }
 
 .item .inner-item, .item a .inner-item {
@@ -111,4 +112,9 @@ input{
 
 .controller * {
   margin: 0 10px;
+}
+
+.character-main {
+  display: grid;
+  grid-template-columns: auto  auto;
 }

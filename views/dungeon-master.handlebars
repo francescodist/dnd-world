@@ -1,7 +1,7 @@
 <h1>DM Dashboard</h1>
 <div class="list-row">
     {{#each characters}}   
-    <div class="item no-hover">
+    <div class="item dm-item">
         <a href="/character/{{this._id}}" class="item">
             <div class="inner-item">
                 {{this.name}} - {{this.class}}
@@ -11,6 +11,7 @@
                         id="pfMaxC{{this._id}}">{{this.pfMax}}</span></p>
             </div>
         </a>
+        <a href="/pdf/uploads/{{this.name}}_{{this._id}}.pdf" class="myButton" target="_blank">View PDF</a>
     </div>  
     {{/each}}
 </div>

@@ -49,3 +49,19 @@ socket.on('updateHealth', data => {
   if (!element) return;
   element.innerHTML = value;
 })
+
+function loadPDF() {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.click();
+  input.onchange = () => {
+    const file = input.files[0];
+    const fd = new FormData();
+    const name = document.querySelector("#name").value.split(" ").shift();
+    const id = window.location.pathname.split("/").pop();
+    fd.append("upload", file);
+    fd.append("name",`${name}_${id}.pdf`)
+    postFile("/load-pdf",fd)
+  }
+  return false;
+}
