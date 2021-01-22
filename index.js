@@ -4,9 +4,14 @@ const app = express();
 const port = process.env.PORT || 3000;
 const server = http.createServer(app);
 const io = require("socket.io")(server, { transports: ["websocket"] });
-//Loads the handlebars module
 const handlebars = require("express-handlebars");
-//Sets our app to use the handlebars engine
+const multer = require("multer")
+const upload = multer({ dest: 'uploads/' })
+const fs = require("fs")
+
+fs.mkdir("public/pdf", console.error);
+fs.mkdir("public/pdf/uploads", console.error)
+
 
 const mongoose = require("mongoose");
 mongoose.connect("mongodb+srv://dnd-world.ugyx6.mongodb.net/dungeon-world", {
@@ -45,6 +50,7 @@ const Character = mongoose.model("Character", {
 });
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 
 app.set("view engine", "handlebars");
 //Sets handlebars configurations (we will go through them later on)
@@ -146,5 +152,16 @@ app.get("/dungeon-master/:gameId", async (req, res) => {
   const characters = await Character.find().lean();
   res.render("dungeon-master", {characters});
 });
+
+app.post("/load-pdf",upload.single('upload'),async (req,res) => {
+  console.log(JSON.stringify(req.body))
+  const {path} = req.file
+  const {name} = req.body;
+  fs.rename(path, `public/pdf/uploads/${name}`, (err) => {
+    if(!err) console.log(`File: ${name} uploaded successfully`)
+    else console.error(`Error loading file ${name}`, err)
+  })
+  res.json({})
+})
 
 server.listen(port);
