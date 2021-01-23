@@ -121,35 +121,61 @@
             <button class="myButton" onclick="setPF()">Set</button>
         </div>
 
-        {{!-- <div class = "controller">
-            <div style="width: 100%;"><h2>Roll one or more dices:</h2></div>
-            <div>
-                <label for="quantity">Quantity</label>
-                <input type="number" name="quantity-dice" id="quantity-dice">    
+        <div class = "controller">
+            <div style="width: 100%;"><h2>Roll one or more dice:</h2></div>
+            <div class="list-row">
+                    <div class="inner-item" onclick="roll(4)">
+                        <img src="/img/d4_blank.png" height="60px" width="60px">
+                        <div class="dice-number"><p>4</p></div>
+                    </div>
+                    <div class="inner-item" onclick="roll(6)">
+                        <img src="/img/d6_blank.png" height="60px" width="60px">
+                        <div class="dice-number"><p>6</p></div>
+                    </div>
+                    <div class="inner-item" onclick="roll(8)">
+                        <img src="/img/d8_blank.png" height="60px" width="60px">
+                        <div class="dice-number"><p>8</p></div>
+                    </div>
+                    <div class="inner-item" onclick="roll(10)"> 
+                        <img src="/img/d10_blank.png" height="60px" width="60px">
+                        <div class="dice-number"><p>10</p></div>
+                    </div>
+                    <div class="inner-item" onclick="roll(12)">
+                        <img src="/img/d12_blank.png" height="60px" width="60px">
+                        <div class="dice-number"><p>12</p></div>
+                    </div>
+                    <div class="inner-item" onclick="roll(20)">
+                        <img src="/img/d20_blank.png" height="60px" width="60px">
+                        <div class="dice-number"><p>20</p></div>
+                    </div>
             </div>
             <div>
-                <label for="type">Type</label>
-                <input type="number" name="type-dice" id="type-dice">            
-            </div>
-            <div>
+                +
                 <label for="type">Mod</label>
-                <select name="Mod" id="mod-dice">
-                    <option value="str">FOR</option>
-                    <option value="des">DES</option>
-                    <option value="cos">COS</option>
-                    <option value="int">INT</option>
-                    <option value="sag">SAG</option>
-                    <option value="car">CAR</option>
-                    <option value="none">None</option>
-                </select>           
+                <select name="Mod" id="mod-dice" onchange="setMod()">
+                    <option value="{{character.stats.str.mod}}">FOR</option>
+                    <option value="{{character.stats.des.mod}}">DES</option>
+                    <option value="{{character.stats.cos.mod}}">COS</option>
+                    <option value="{{character.stats.int.mod}}">INT</option>
+                    <option value="{{character.stats.sag.mod}}">SAG</option>
+                    <option value="{{character.stats.car.mod}}">CAR</option>
+                    <option value="0">None</option>
+                </select>
+                +           
+                <label for="type">Custom Mod</label> <input type="number" name="mod-dice-custom" id="mod-dice-custom" onchange="setMod()">
             </div>
-            <button class="myButton" onclick="roll()">Roll!</button>
-        </div> --}}
-
-
-
-
-    </div>
+            {{!-- <button class="myButton" onclick="roll()">Roll!</button> --}}
+            <button class="myButton" onclick="resetDice()">Reset</button>
+        </div>
+        <div class="controller">
+            <div style="display: contents;">
+                <div class="list-row" id="dice-results">
+                     
+                </div>
+                <span id="total-display" style="display: contents;"><h1 id="total-result"></h1></span>
+               
+            </div> 
+        </div>
 
 
     <div class="action-footer">
@@ -157,6 +183,8 @@
             {{#each characters}}
             {{!-- <a href="/character/{{this._id}}" class="item"> --}}
             <div class="item">
+                <div class="inner-item" id="Character{{this._id}}">
+                </div>
                 <div class="inner-item">
                     {{this.name}} - {{this.class}}
                 </div>

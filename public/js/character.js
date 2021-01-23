@@ -56,6 +56,45 @@ async function levelUp() {
   expEl.value = exp - (level + 7);
 }
 
+async function roll(die) {
+  let total = 0;
+  const dieResult = 1 + Math.floor(Math.random() * (die))
+  const id = window.location.pathname.split("/").pop();
+  const totalResultHtml = document.querySelector("#total-result");
+  const totalResultPreviousValue = Number(document.querySelector("#total-result").innerText);
+  const totalDisplay = document.querySelector("#total-display");
+  const mod =  Number(document.querySelector("#mod-dice").value);
+  const customMod =  Number(document.querySelector("#mod-dice-custom").value);
+
+  if(totalResultPreviousValue == 0){
+    total = dieResult + mod + customMod;
+  } else {
+    total = dieResult;
+  }
+  
+
+  total += totalResultPreviousValue;
+  const resultList = document.querySelector("#dice-results");
+  
+
+  resultList.innerHTML += '<div class="inner-item" >' + 
+                          '<img src="/img/d'+die+'_blank.png" height="120px" width="120px">'+
+                          '<div class="dice-number-result"><p>'+ dieResult+'</p></div>'+
+                          '</div>';
+  totalResultHtml.innerHTML = total;
+  totalDisplay.innerHTML = '<h1>Total: </h1><h1 id="total-result">' + total + '</h1>'
+  socket.emit('playerRoll', {total, id});
+}
+
+function resetDice(){
+  const totalResultHtml = document.querySelector("#total-result");
+  const resultList = document.querySelector("#dice-results");
+  const totalDisplay = document.querySelector("#total-display");
+  resultList.innerHTML = '';
+  totalDisplay.innerHTML = '<h1 id="total-result"></h1>';
+
+}
+
 socket.on('updateHealth', data => {
   let element, value;
   if (data.hasOwnProperty('pf')) {
@@ -73,6 +112,13 @@ socket.on('updateLevel', ({level, id}) => {
   let levelElement = document.querySelector(`#levelC${id}`);
   levelElement.innerHTML = `${level}`
 })
+
+socket.on('updateRollPlayer', data => {
+  const element = document.querySelector(`#Character${data.id}`);
+  element.innerHTML = '<p><span>Rolled: ' + data.total + '</span></p>';
+});
+
+
 
 function loadPDF() {
   const input = document.createElement("input");

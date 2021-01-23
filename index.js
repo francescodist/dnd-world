@@ -185,6 +185,13 @@ app.post("/load-pdf",upload.single('upload'),async (req,res) => {
   res.json({})
 })
 
+io.on('connection', (socket) => {
+  socket.on('playerRoll' , data => {
+
+    socket.broadcast.emit('updateRollPlayer', data);
+  });
+});
+
 function syncPdfFiles() {
   fs.mkdir("public/pdf", () => {
     fs.mkdir("public/pdf/uploads", async () => {

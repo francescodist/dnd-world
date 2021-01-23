@@ -128,3 +128,14 @@ input{
 .character-details div {
   margin-top: 20px;
 }
+
+.dice-number {
+  position: relative;
+  bottom: 40px;
+}
+
+.dice-number-result {
+  position: relative;
+  bottom: 80px;
+  font-size: xx-large;
+}
