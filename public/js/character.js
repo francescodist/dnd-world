@@ -78,7 +78,7 @@ async function roll(die) {
   
 
   resultList.innerHTML += '<div class="inner-item" >' + 
-                          '<img src="/img/d'+die+'_blank.png" height="120px" width="120px">'+
+                          '<img src="/img/d'+die+'_blank.png" height="80px" width="80px">'+
                           '<div class="dice-number-result"><p>'+ dieResult+'</p></div>'+
                           '</div>';
   totalResultHtml.innerHTML = total;

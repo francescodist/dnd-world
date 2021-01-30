@@ -103,23 +103,23 @@
                 LIV: <span id="level">{{character.level}}</span>
                 <button class="myButton" id="levelBtn" {{#unless (canLevelUp character)}}disabled{{/unless}} onclick="levelUp()">Level Up</button>
             </div>
+            <div class="controller">
+                <h1>PF: <span id="pfValue">{{character.pf}}</span> / <span id="pfMaxValue">{{character.pfMax}}</span></h1>
+            </div>
+            <div class="controller">
+                <div>
+                    <label for="quantity">Quantity</label>
+                    <input type="number" name="quantity-health" id="quantity-health">
+                </div>
+                <button class="myButton" onclick="heal()">Heal</button>
+                <button class="myButton" onclick="damage()">Damage</button>
+                <button class="myButton" onclick="setPF()">Set</button>
+            </div>
         </div>
         
     </div>
 
     <div class="mid-footer">
-        <div class="controller">
-            <h1>PF: <span id="pfValue">{{character.pf}}</span> / <span id="pfMaxValue">{{character.pfMax}}</span></h1>
-        </div>
-        <div class="controller">
-            <div>
-                <label for="quantity">Quantity</label>
-                <input type="number" name="quantity-health" id="quantity-health">
-            </div>
-            <button class="myButton" onclick="heal()">Heal</button>
-            <button class="myButton" onclick="damage()">Damage</button>
-            <button class="myButton" onclick="setPF()">Set</button>
-        </div>
 
         <div class = "controller">
             <div style="width: 100%;"><h2>Roll one or more dice:</h2></div>

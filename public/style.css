@@ -65,6 +65,7 @@ p {
   padding: 10px;
   margin: auto 20px;
   flex-direction: column;
+  max-width: 200px;
 }
 
 a.item {
@@ -136,6 +137,6 @@ input{
 
 .dice-number-result {
   position: relative;
-  bottom: 80px;
+  bottom: 60px;
   font-size: xx-large;
 }
